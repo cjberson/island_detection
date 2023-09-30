@@ -1,14 +1,13 @@
 """
 This is the best approach I could implement without making an agent
-that learns. It keeps track of the farthest index it has
-seen in each row. It generates new states only downward in right rather than in
-four directions like the other approaches. Whenever the queue of states is
-emptied, it finds the next land by iterating over each row starting at the
-farthest index it has seen previously. Using a smarter generator and having the
-ability easily find the next land to explore, greatly reduces the search space
-and as a result greatly improves performance. In my testing on large grids, with
-minimum and maximum dimensions of 50 and 100 respectively, this method visits less
-than half the number of nodes and finds the solution in half the time.
+that learns. It keeps track of the farthest index it has seen in each row.
+It generates new states only downward in right rather than in four directions
+like the other approaches. Whenever the queue of states is emptied, it finds the
+next land by iterating over each row starting at the farthest index it has seen
+previously. Having the ability easily find the next land to explore, greatly reduces
+the search space and as a result greatly improves performance. In my testing on
+large grids, with minimum and maximum dimensions of 50 and 100 respectively, this
+method visits less than half the number of nodes and finds the solution in half the time.
 """
 from collections import deque
 from typing import Tuple, Dict
@@ -24,6 +23,10 @@ def bfs_next_land(grid: Grid) -> int:
 def bfs_next_land_with_node_count(grid: Grid) -> Tuple[int, int]:
     row_to_farthest: Dict[int, int] = {i: -1 for i in range(len(grid))}
     first_land = find_next_land(grid, row_to_farthest)
+
+    if first_land is None:
+        return 0
+
     q = deque()
     q.appendleft(first_land)
     visited = set()

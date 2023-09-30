@@ -10,7 +10,7 @@ from collections import deque
 from typing import List, Tuple
 
 from Constants import WATER, LAND, Grid
-from Generator import generate_moves
+from Generator import generate_downward_moves
 
 
 def bfs_on_land(grid: Grid) -> int:
@@ -63,7 +63,7 @@ def bfs_land_to_water(grid: Grid, coordinate: Tuple[int, int]) -> int:
 
             if grid[x][y] == LAND:
                 grid[x][y] = WATER
-                for new_state in generate_moves(grid, state):
+                for new_state in generate_downward_moves(grid, state):
                     q.appendleft(new_state)
 
     return len(visited)
